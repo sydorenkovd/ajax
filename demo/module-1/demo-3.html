@@ -7,14 +7,33 @@
 	<script type="text/javascript" src="../xmlhttprequest.js"></script>
 	<script type="text/javascript">
 		// Показ текста, полученного из файла
+		var req;
 		function getText(fileName){
-			
+			req = getXmlHttpRequest();
+			req.onreadystatechange = function(){
+				if(req.readyState == 4){
+					if(req.status != 200)
+						alert(req.status + " : " + req.statusText);
+					else
+						console.log(req.responseText);
+			}
+		};
+			req.open("GET", fileName, true);
+req.send(null);
 		}
-		
 		// Показ заголовков, полученных от сервера
 		function getInfo(fileName){
-			
-		}		
+			req = getXmlHttpRequest();
+			req.onreadystatechange = function(){
+				if(req.readyState == 4){
+					console.log(req.getResponseHeader("Content-Length"));
+					console.log(req.getResponseHeader("Last-Modified"));
+					console.log(req.getAllResponseHeaders());
+				}
+					};
+			req.open("GET", fileName, true);
+			req.send(null);
+		}	
 	</script>
 </head>
 <body>

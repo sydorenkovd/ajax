@@ -4,18 +4,24 @@
 	<title>Лабораторная работа 1</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Language" content="ru" />
+  <script type="text/javascript" src="../xmlhttprequest.js"></script>
 	<!--
 		**
 		**	Задание 1. Создание объекта XmlHttpRequest
 		**		
 	-->
 	<script type="text/javascript">
-		/*
-		**
-		**	Задание 2. Выборка книги 
-		**
-		*/
-
+		function getBookByNumber(bookId){
+			var req = getXmlHttpRequest();
+			req.onreadystatechange = function(){
+				if(req.readyState == 4){
+var div = document.getElementById("divResult");
+div.firstChild.nodeValue = req.responseText;
+					}
+		} 
+		req.open("GET", "getbooktxt.php?num="+bookId, true);
+			req.send(null);
+}
 
 		
 		/*
@@ -23,7 +29,10 @@
 		**	Задание 3. Обработчик кнопки
 		**
 		*/ 
-
+function showBook(){
+	var num = document.getElementById("txtNum");
+	getBookByNumber(num.value);
+}
 	</script>
 </head>
 <body>
