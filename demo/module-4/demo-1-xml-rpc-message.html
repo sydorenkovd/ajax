@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>XML-RPC сообщение</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Language" content="ru" />
+	<script type="text/javascript" src="xmlrpc.js"></script>
+	<script type="text/javascript">
+		function showXMLRPCMessage(){
+			// Массив
+			var arr = ["John", "Mike", "Вася", "Петя"];
+			
+			// Объект
+			var obj = {};
+			obj.x = 20; 
+			obj.y = "Корова"; 
+			obj.z = 3.14; 
+
+			// Дата
+			var date = new Date(); 
+
+			// Формируем сообщение (второй параметр - кодирвка XML сообщения)
+			var msg = new XMLRPCMessage("system.myMethod", "utf-8"); 
+			msg.addParameter("Привет мир!"); 
+			msg.addParameter(8); 
+			msg.addParameter(false); 
+			msg.addParameter(arr); 
+			msg.addParameter(obj); 
+			msg.addParameter(date);		
+			
+			alert(msg.xml());
+		}
+	</script>
+</head>
+<body>
+	<h1>XML-RPC сообщение</h1>
+	<div>
+		<button onclick="showXMLRPCMessage()">XML-RPC сообщение</button>
+	</div>
+</body>
+</html>
+

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>Передача данных методом POST</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Language" content="ru" />
+	<link rel="stylesheet" type="text/css" href="demo-2-post.css" />
+	<script type="text/javascript" src="../xmlhttprequest.js"></script>
+	<script type="text/javascript">
+		// Очистка списка
+		function clearList(){
+			var ulResult = document.getElementById("ulResult");
+			while (ulResult.hasChildNodes())
+				ulResult.removeChild(ulResult.lastChild);
+		}
+		// Добавление нового элемента списка
+		function addListItem(text){
+			if (text.length == 0) return;
+			var ulResult = document.getElementById("ulResult");
+			var li = document.createElement("li");
+			ulResult.appendChild(li);
+			var liText = document.createTextNode(text);
+			li.appendChild(liText);
+		}
+		
+		// Поиск книг
+		function searchBook(){
+			// Параметры поиска
+			var title = document.getElementById("txtTitle").value;
+			var author = document.getElementById("txtAuthor").value;
+			// Формирование строки поиска
+			var searchString = "title=" + title + "&" + "author=" + author;
+			//alert("searchString: " + searchString);
+			
+			// Запрос к серверу
+			var req = getXmlHttpRequest();
+			req.onreadystatechange = function(){
+					if (req.readyState != 4) return;
+					var responseText = String(req.responseText);
+					var books = responseText.split('\n');
+					clearList();
+					for (var i = 0; i < books.length; i++)
+						addListItem(books[i]);
+				};
+				
+			// Метод POST
+			req.open("POST", "searchbook.php", true);
+
+			// Установка заголовков
+			req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			//req.setRequestHeader("Content-Length", searchString.length);
+			
+			// Отправка данных
+			req.send(searchString);			
+		}
+	</script>
+</head>
+<body>
+	<h1>Передача данных методом POST</h1>
+	<form action="" onsubmit="return false">
+		<fieldset>
+			<legend>Поиск книг</legend>
+			<div>
+				<label for="txtAuthor">Автор</label>
+				<input id="txtAuthor" type="text" name="author" />
+			</div>
+			<div>
+				<label for="txtTitle">Название</label>
+				<input id="txtTitle" type="text" name="title" />
+			</div>		
+			<button onclick="searchBook()">Поиск</button>
+		</fieldset>
+	</form>
+	<ul id="ulResult"></ul>
+</body>
+</html>

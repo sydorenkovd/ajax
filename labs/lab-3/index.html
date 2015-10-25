@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>Пользователи на сайте</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Language" content="ru" />
+	<link rel="stylesheet" type="text/css" href="lab-3.css" />
+	<script type="text/javascript" src="../xmlhttprequest.js"></script>
+	<script type="text/javascript" src="json2.js"></script>
+	<script type="text/javascript">
+		// Класс UserInfo
+		function UserInfo() {
+			this.name = "";
+			this.login = "";
+			this.password = "";
+		}
+		
+		// Класс Билет сессии
+		/*
+			function Ticket() {
+				this.id = "";
+				this.valid = false;
+			}
+		*/
+	
+		/*
+		**
+		**	Задание 1. Отображение формы
+		**
+		*/
+		function showLoginForm(){}
+		
+		/*
+		**
+		**	Задание 2. Проверка пользователя 
+		**
+		*/
+
+		// Билет пользователя
+		var ticket;
+		
+		// Функция проверки пользователя
+		function validateUser(){}
+
+		// Функция гашения сообщения об ошибке
+		function hideErrorMessage() {}
+
+		
+		/*
+		**
+		**	Задание 3. Список пользователей
+		**
+		*/
+		
+		function showOnLineUsers() {}
+
+		
+	</script>
+</head>
+<body>
+	<h1>Пользователи на сайте</h1>
+	
+	<!-- Форма входа -->
+	<form action="#" id="frmLogin" onsubmit="return false" class="block">
+		<h2>Авторизация пользователя</h2>
+		<div>
+			<label for="txtLogin">Логин</label>
+			<input id="txtLogin" type="text" />
+		</div>
+		<div>
+			<label for="txtPassword">Пароль</label>
+			<input id="txtPassword" type="password" />
+		</div>
+		<button onclick="validateUser()">Вход</button>
+		<div id="divMessage" class="block">
+			<h2>Ошибка</h2>
+			<div>Неправильный логин или пароль!</div>
+			<button onclick="hideErrorMessage()">Закрыть</button>
+		</div>
+	</form>
+	
+	<!-- Панель списка пользователей -->
+	<div id="divUsers" class="block">
+		<h2>Пользователи на сайте</h2>
+		<button onclick="showLoginForm()">Вход</button>
+		<ul></ul>
+	</div>
+	
+	<!-- Просто красивые картинки -->
+	<ul style='list-style:none'>
+		<li><img src='../../images/1000478162.jpg'>
+				<img src='../../images/1000569827.jpg'></li>
+		<li><img src='../../images/1000653244.jpg'>
+				<img src='../../images/1000372094.jpg'></li>
+	</ul>
+</body>
+</html>
+

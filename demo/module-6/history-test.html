@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<title>HTML5 History API</title>
+	<script>
+		function O(x) {
+			return document.getElementById(x);
+		}
+		var state, links, output, data;
+		// Шаблон для отрисовки
+		var template = "<p>URL: <strong>{url}</strong>, name: <strong>{name}</strong>, email: <strong>{email}</strong></p>";
+
+		// Заполнение и использование шаблона
+		function reportData(data) {
+			output.innerHTML = template.replace(/(:?\{(.*?)\})/g, function (a, b, c) {
+				return data[c];
+			});
+		}
+		window.onload = function(){
+			// Выборка элементов
+			state = O('status'),
+			links = O('links'),
+			output = O('output'),
+			data = {
+				john : { "name": "John Smith", "email": "john@smith.com" },
+				mike : { "name": "Mike Dow", "email": "mike@dow.org" },
+				vasya : { "name": "Vasya Pupkin", "email": "vasya@pupkin.ru" },
+				fedya : { "name": "Fedya Sumkin", "email": "fedya@sumkin.ru" }
+			};
+			// Проверка поддержки HTML5 History API
+			if (typeof history.pushState !== 'undefined') {
+				state.innerHTML = 'HTML5 History API поддерживается';
+				links.style.display = "";
+			}
+			// Отслеживаем клик по нашим ссылкам
+			links.addEventListener('click', function (event) {
+				var title;
+				event.preventDefault();
+				if (event.target.nodeName == 'A') {
+					title = event.target.innerHTML;
+					data[title].url = event.target.getAttribute('href');
+					history.pushState(data[title], title, event.target.href);
+					reportData(data[title]);
+				}
+			});
+
+
+			window.addEventListener('popstate', function (event) {
+				reportData(event.state || { url: "none", name: "none", email: "undefined" });
+			});
+		};
+
+	</script>
+</head>
+<body>
+	<p id="status">HTML5 History API не поддерживается!</p>
+	<ul id="links" style="display:none">
+		<li><a href="/user/john">john</a></li>
+		<li><a href="/user/mike">mike</a></li>
+		<li><a href="/user/vasya">vasya</a></li>
+		<li><a href="/user/fedya">fedya</a></li>
+	</ul>
+	<div id="output"></div>
+</body>
+</html>

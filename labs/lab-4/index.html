@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>Расчет суммы товаров электронного магазина</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Language" content="ru" />
+	<link rel="stylesheet" type="text/css" href="lab-4.css" />
+	<script type="text/javascript" src="../xmlhttprequest.js"></script>
+	<script type="text/javascript" src="xslt.js"></script>
+	<script type="text/javascript" src="xmlrpc.js"></script>
+	<script type="text/javascript" src="xmltools.js"></script>
+	<script type="text/javascript">
+		
+		// XSLT документы
+		var xslDelivery, xslOrder; 
+		
+		// Функция проверяет и показывает сообщение об ошибке
+		function isError(xmlDOM){
+			try{
+				if (xmlDOM.getElementsByTagName("fault").length > 0){
+					var errorString = xmlDOM.getElementsByTagName("string")[0].firstChild.nodeValue;
+					alert("Ошибка!\n" + errorString);
+					return true;
+				}else{
+					return false;
+				}
+			}catch (e){
+				alert("Ошибка обработки XML!\n" + xmlDOM);
+				return true;
+			}
+		}
+	
+		/*
+		**
+		**	Задание 1. Получение способов доставки
+		**
+		*/
+		function getDeliveryMethods(){}
+		
+		
+		/* 
+		**
+		**	Задание 2. Отображение способов доставки
+		**
+		*/
+		function showDelivery(xmlDOM){}
+		
+		
+		/*
+		**
+		**	Задание 3. Получение данных о заказе
+		**
+		*/
+		function calculateOrder(){}
+		
+		
+		/*
+		**
+		**	Задание 4. Отображение данных о заказе
+		**
+		*/
+		function showOder(xmlDOM){}
+		
+	
+		// Инициализация страницы
+		window.onload = function(){
+			// Загрузка преобразований
+			var req = getXmlHttpRequest();
+			req.open("GET", "delivery.xsl", false);
+			req.send(null);
+			xslDelivery = req.responseXML;
+			
+			req.open("GET", "order.xsl", false);
+			req.send(null);
+			xslOrder = req.responseXML;			
+			
+			// Получим способы доставки
+			//getDeliveryMethods();
+		}
+	</script>
+</head>
+<body>
+	<h1>Расчет суммы заказа электронного магазина</h1>
+	<form action="#" onsubmit="return false">
+		<!-- Сумма заказа -->
+		<div>
+			<label for="txtOrderSum">Сумма заказа</label>
+			<input id="txtOrderSum" type="text" value="1000" />
+			<span>руб.</span>
+		</div>
+		<!-- Доставка -->
+		<div id="divDelivery">
+			<label for="selDelivery">Доставка</label>
+		</div>
+		<!-- Расчет стоимости заказа -->
+		<div id="divOrder"></div>
+		<button onclick="calculateOrder()">Расчитать</button>
+	</form>
+</body>
+</html>
+

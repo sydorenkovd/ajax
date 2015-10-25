@@ -1,0 +1,6 @@
+# Требуется аутентификация
+AuthType Basic  
+AuthName "Private zone. Only for valid users!"
+AuthUserFile  "C:/Users/Public/Apps/OpenServer/domains/mysite.local/demo/module-6/base_auth/.htpasswd"
+
+require valid-user

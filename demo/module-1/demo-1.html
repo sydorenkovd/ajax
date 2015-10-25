@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>Пример запроса данных с сервера</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Language" content="ru" />
+  <script src="../xmlhttprequest.js"></script>
+	<!-- xmlhttprequest -->
+	<script type="text/javascript">
+		function showDemoSample(){
+			// Адрес текущей страницы
+			var url = location.href;
+			// Объект XMLHttpRequest
+			var request = getXmlHttpRequest();
+			// Запрос на сервер
+			request.open("GET", url, true);
+			// Чтение ответа
+			request.send(null);
+			alert(request.responseText);
+		}
+	</script>
+</head>
+<body>
+	<h1>Пример запроса данных с сервера</h1>
+	<p><button onclick="showDemoSample()">Пробуем!</button></p>
+</body>
+</html>

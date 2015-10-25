@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>Аутентификация пользователя</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Language" content="ru" />
+	<style type="text/css">
+		#divShadowScreen { display:none; position:absolute; top:0px; left:0px; z-index:1; width:100%; height:100%; background-color:#000; opacity: 70%; filter:alpha(opacity=70); -moz-opacity: 0.7; }
+		#divFrmLogin { display:none; width:25em; position:absolute; top:50%; left:50%; font-family:Verdana,Sans-serif; font-size:small; z-index:2; }
+		#frmLogin { border:1px solid #000; background-color:#fff; padding:1em; position:relative; top:-10em; left:-12em; }
+		#frmLogin div { margin:1em; }
+		#frmLogin div label { display:block; width:8em; float:left; }
+		#divButtons { text-align:center; }
+		#divButtons button { margin:1em; width:6em; }
+		#divResult { margin:2em; }
+	</style>
+	<script type="text/javascript" src="md5.js"></script>
+	<script type="text/javascript" src="json2.js"></script>
+	<script type="text/javascript" src="../xmlhttprequest.js"></script>
+	<script type="text/javascript">
+		/*
+		** Адрес сервера
+		*/
+		var server = "server/server.php";
+		
+		
+		/*
+		** Констуктор объекта Entropy
+		*/
+		function Entropy(){
+			this.salt = arguments.length > 0 ? arguments[0] : "";
+			this.iterationCount = arguments.length > 1 ? arguments[1] : "";
+		}
+		
+		/*
+		** Констуктор объекта User
+		*/
+		function User(){
+			// Свойства объекта
+			this.name = arguments.length > 0 ? arguments[0] : "";
+			this.email = arguments.length > 1 ? arguments[1] : "";
+			this.password = arguments.length > 2 ? arguments[2] : "";
+			this.dbEntropy = new Entropy();
+			this.transferEntropy = new Entropy();
+		}
+		
+		/*
+		** "Засоливание" пароля RFC2898
+		*/
+		function getSaltedHash(password, salt, iterationCount){
+			var saltedHash = password;
+			if (iterationCount < 1) iterationCount = 1;
+			for (var i=0; i<iterationCount; i++)
+				saltedHash = hex_md5(salt + saltedHash);
+			return saltedHash;
+		}
+		
+		/*
+		** Функция показывает/гасит форму входа на сайт
+		*/
+		function showHideLoginForm(visibility){
+			if (visibility){
+				document.getElementById("divShadowScreen").style.display = "block";
+				document.getElementById("divFrmLogin").style.display = "block";
+				if (document.getElementById("txtEmail").value)
+					document.getElementById("txtPassword").focus();
+				else
+					document.getElementById("txtEmail").focus();
+			}else{
+				document.getElementById("divShadowScreen").style.display = "";
+				document.getElementById("divFrmLogin").style.display = "";				
+			}
+		}
+		
+		
+		function loginUser(){
+			// Введенный пользователем E-mail
+			var email = document.getElementById("txtEmail").value;
+			
+			/* 
+			**
+			**	Задание 1. Запрос «соли» хеширования с сервера
+			**
+			*/
+			// Создадим объект User
+			
+			
+			// Гашение формы ввода пароля
+			showHideLoginForm(false);
+		}
+
+		function sendPassword(user){
+			// Введенный пользователем пароль
+			user.password = document.getElementById("txtPassword").value;
+			// Сбос введенного пароля
+			document.getElementById("txtPassword").value = "";			
+			
+			/* 
+			**
+			**	Задание 2. Хеширование пароля
+			**
+			*/
+		}
+		
+		function showUserData(user){
+			// Объект вывода результатов
+			var divResult = document.getElementById("divResult");
+			
+			/* 
+			**
+			**	Задание 3. Вывод данных
+			**
+			*/
+		}
+	</script>
+</head>
+<body>
+	<h1>Аутентификация пользователя</h1>
+	<form action="#" onsubmit="return false">
+		<button onclick="showHideLoginForm(true)">Вход</button>
+	</form>
+	<div id="divFrmLogin">
+		<form id="frmLogin" onsubmit="return false">
+			<div>
+				<label for="txtEmail">Ваш E-mail:</label>
+				<input id="txtEmail" type="text" />
+			</div>
+			<div>
+				<label for="txtPassword">Ваш пароль:</label>
+				<input id="txtPassword" type="password" />
+			</div>
+			<div id="divButtons">
+				<button onclick="loginUser()">Вход</button>
+				<button onclick="showHideLoginForm(false)">Закрыть</button>
+			</div>
+		</form>		
+	</div>
+	<div id="divResult"></div>
+	<div id="divShadowScreen"></div>
+</body>
+</html>
+

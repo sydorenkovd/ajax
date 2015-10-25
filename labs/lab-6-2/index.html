@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>Понедельник начинается в субботу</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Language" content="ru" />
+	<link rel="stylesheet" type="text/css" href="lab-6-2.css" />
+	<script type="text/javascript" src="../xmlhttprequest.js"></script>
+	<script type="text/javascript" src="xslt.js"></script>
+	<script type="text/javascript">
+		// Адреса сервера
+		var serverXml = "server/get-section-xml.php";
+		var serverHtml = "server/get-section-html.php";
+		
+		// XSLT преобразование
+		var fb2html;
+		
+	
+		/* 
+		**
+		**	Задание 1. Загрузка главы книги
+		**
+		*/
+		function getChapter(no){
+	
+		}
+		
+		/* 
+		**
+		**	Задание 2. Показ главы книги 
+		**
+		*/
+		function showChapter(xmlDOM, currentChapter){
+			// Узнаем общее число глав
+			var chapterCount = xmlDOM.documentElement.firstChild.getAttribute("count");
+
+		}
+
+		/*
+		** Инициализация страницы
+		*/
+		window.onload = function()
+		{
+			// Покажем сообщение пользователю
+			var divMessageLoad = document.getElementById("divMessageLoad");
+			divMessageLoad.style.display = "block";
+			
+			// Загрузка XSLT преобразования
+			var req = getXmlHttpRequest();
+			req.open("GET", "server/fb2html.xsl", false);
+			req.send(null);
+			fb2html = req.responseXML;
+			
+			// Уберем сообщение пользователю
+			divMessageLoad.style.display = "none";
+			
+			// Показ первой главы
+			getChapter(1);
+		}
+	</script>
+</head>
+<body>
+	<h1>Понедельник начинается в субботу</h1>
+	<div id="divMessageLoad">Идет загрузка данных...</div>
+	<noscript><a href="server/get-section-html.php?no=1">Перейти к чтению книги</a></noscript>
+	<div id="divChapters"></div>
+	<div id="divResult"></div>
+</body>
+</html>

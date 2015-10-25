@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>Выбор книг в корзину</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Language" content="ru" />
+	<link rel="stylesheet" type="text/css" href="lab-5.css" />
+	<script type="text/javascript" src="../xmlhttprequest.js"></script>
+	<script type="text/javascript" src="xslt.js"></script>
+	<script type="text/javascript" src="xmltools.js"></script>
+	<script type="text/javascript">
+		// URL сервера, взято из WSDL
+		var serverBase = "server/";
+		var server = serverBase + "server.php";
+		
+		// Текущий набор книг
+		var xmlBooks = null;
+		
+		// Идентификатор сессии пользователя
+		var sessionId = "";
+		
+		// Функция показывает книги указанной категории
+		function showBooks(){
+			var selCategory = document.getElementById("selectPlaceholder").firstChild;
+			if (!selCategory) return;
+			// Загрузка сообщения getBooks-request
+			var msgGetBooks = loadXML(serverBase + "messages/getBooks-request.xml");
+			setParameter("categoryId", selCategory.value, msgGetBooks);
+			// Асинхронный запрос сервера
+			sendMessage(msgGetBooks, "urn:SampleServer2-getBooks", true, showBooksCallBack);
+		}
+		
+		// Функция обратного вызова при завершении метода showBooks
+		function showBooksCallBack(req){
+			// Считаем полученное сообщение
+			xmlBooks = req.responseXML;
+			// Загрузка преобразования
+			var xsltBooks = loadXML(serverBase + "xslt/getBooks.xsl");
+			// Отображение таблицы книг
+			document.getElementById("tablePlaceholder").innerHTML = xsltTransform(xmlBooks, xsltBooks);
+		}
+
+
+		/*
+		**							
+		**	Задание 1. Регистрация новой сессии
+		**						
+		*/
+		function registerSession(){
+			
+		}
+
+		
+		/*
+		**
+		**	Задание 2. Добавление книг в корзину
+		**
+		*/
+		function addToBasket(bookId){
+
+		}
+		
+
+		/*
+		**
+		**	Задание 3. Отображение корзины
+		**
+		*/
+		function showBasket(){
+
+		}
+
+		
+		/*
+		**
+		**	Задание 4. Очистка корзины
+		**
+		*/
+		function emptyBasket(){
+		
+		}
+
+	
+		
+		// Инициализация страницы
+		window.onload = function(){
+			// Загрузка сообщения getCategories
+			var msgGetCat = loadXML(serverBase + "messages/getCategories-request.xml");
+			// Синхронный запрос сервера
+			var msgGetCatResponse = sendMessage(msgGetCat, "urn:SampleServer2-getCategories", false, null);
+			// Загрузка преобразования
+			var xsltCat = loadXML(serverBase + "xslt/getCategories.xsl");
+			// Отображение списка категорий
+			document.getElementById("selectPlaceholder").innerHTML = xsltTransform(msgGetCatResponse, xsltCat);
+			// Регистрация новой сессии
+			registerSession();
+		}
+	</script>
+</head>
+<body>
+	<h1>Выбор книг в корзину</h1>
+	<div id="sessId"></div>
+	<div id="container">
+		<form action="#" onsubmit="return false">
+			<div>
+				<label for="selectPlaceholder">Категория</label>
+				<span id="selectPlaceholder"></span>
+				<button onclick="showBooks()">Показать</button>
+			</div>
+		</form>
+		<div id="basketPlaceholder"></div>
+		<div id="tablePlaceholder"></div>
+	</div>
+</body>
+</html>

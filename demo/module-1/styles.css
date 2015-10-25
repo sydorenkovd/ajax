@@ -1,0 +1,20 @@
+﻿/*
+** Таблица стилей для примеров
+*/
+#sync, #async { 
+	float: left; 
+	width: 40%; 
+	padding: 10px; 
+	text-align: center 
+}
+#async { 
+	border-left: 1px dotted gray; 
+}
+.result { 
+	border: 1px solid black; 
+	margin: auto; 
+	margin-bottom: 10px; 
+	padding: 10px; 
+	width: 10em; 
+	text-align: center; 
+}
